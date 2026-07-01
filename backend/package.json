@@ -1,7 +1,7 @@
 {
-  "name": "lionsdev-api-auth-mvc-boilerplate",
+  "name": "api-lions-bet",
   "version": "1.0.0",
-  "description": "Boilerplate didático para APIs Express com MVC, MongoDB, bcryptjs e JWT.",
+  "description": "Exercício de Express, MongoDB, TokenJWT e Bcrypt ",
   "type": "module",
   "main": "src/server.js",
   "scripts": {
