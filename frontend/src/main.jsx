@@ -15,7 +15,7 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const endpoint = useMemo(() => {
-    return mode === 'cadastro' ? '/api/auth/cadastro' : '/api/auth/login';
+    return mode === 'cadastro' ? 'https://api-lions-bet.onrender.com/api/auth/cadastro' : 'https://api-lions-bet.onrender.com/api/auth/login';
   }, [mode]);
 
   function handleChange(event) {
