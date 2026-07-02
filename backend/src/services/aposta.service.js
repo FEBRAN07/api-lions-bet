@@ -30,10 +30,13 @@ async function apostar(idUsuario, dados) {
     switch (palpite) {
         case "mandante":
             oddNaAposta = evento.oddMandante;
+            break;
         case "empate":
             oddNaAposta = evento.oddEmpate;
+            break;
         case "visitante":
             oddNaAposta = evento.oddVisitante;
+            break;
     }
     const retornoPotencial = (valor * oddNaAposta).toFixed(2);
     UsuarioRepository.ajustarSaldo(idUsuario, -valor);

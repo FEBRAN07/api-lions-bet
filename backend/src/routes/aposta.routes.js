@@ -10,8 +10,8 @@ router.post("/", ApostaController.apostar);
 
 router.get("/", ApostaController.listarMinhas);
 
-router.get("/:id", ApostaController.buscarMinha);
-
 router.get("/admin/todas", apenasAdmin, ApostaController.listarTodas);
+
+router.get("/:id", ApostaController.buscarMinha);
 
 export default router;

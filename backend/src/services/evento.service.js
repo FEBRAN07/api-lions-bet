@@ -25,18 +25,18 @@ async function listarTodos() {
 }
 
 async function buscarPorId(idEvento) {
-    const evento = EventoRepository.buscarPorId(idEvento);
+    const evento = await EventoRepository.buscarPorId(idEvento);
     validarEvento(evento);
     return evento;
 }
 
 async function atualizarOdds(idEvento, dados) {
-    const evento = EventoRepository.buscarPorId(idEvento);
+    const evento = await EventoRepository.buscarPorId(idEvento);
     validarEvento(evento);
     evento.oddMandante = dados.oddMandante;
     evento.oddVisitante = dados.oddVisitante;
     evento.oddEmpate = dados.oddEmpate;
-    EventoRepository.salvar(evento);
+    await EventoRepository.salvar(evento);
     return { message: "Odds atualizadas" };
 }
 
