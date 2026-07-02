@@ -21,6 +21,13 @@ input {
   font: inherit;
 }
 
+button {
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
 .page {
   min-height: 100vh;
   display: grid;
@@ -32,7 +39,7 @@ input {
     url('/luigi_casino.gif') center / cover no-repeat fixed;
 }
 
-.auth-panel {
+.app-panel {
   width: min(100%, 440px);
   margin-right: clamp(0px, 8vw, 120px);
   background: #ffffff;
@@ -40,6 +47,36 @@ input {
   border-radius: 8px;
   padding: 28px;
   box-shadow: 0 20px 48px rgba(23, 23, 23, 0.12);
+}
+
+.events-panel {
+  width: min(100%, 760px);
+}
+
+.app-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 5px;
+  margin-bottom: 22px;
+  border: 1px solid #dad4c8;
+  border-radius: 8px;
+  background: #f7f4ee;
+}
+
+.app-nav button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 6px;
+  color: #4f4b45;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.app-nav button.active {
+  color: #ffffff;
+  background: #11684f;
 }
 
 .brand-block {
@@ -166,13 +203,94 @@ h1 {
   background: #fde8eb;
 }
 
+.events-page {
+  display: grid;
+}
+
+.events-state {
+  margin: 0;
+  border: 1px solid #dad4c8;
+  border-radius: 6px;
+  padding: 14px;
+  color: #4f4b45;
+  background: #f7f4ee;
+  font-weight: 700;
+}
+
+.events-list {
+  display: grid;
+  gap: 14px;
+}
+
+.event-card {
+  display: grid;
+  gap: 16px;
+  border: 1px solid #ddd7ca;
+  border-radius: 8px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.event-card h2 {
+  margin: 0;
+  color: #101010;
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.event-status {
+  width: fit-content;
+  margin: 0 0 8px;
+  border-radius: 999px;
+  padding: 4px 9px;
+  color: #0c513c;
+  background: #dff3eb;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.odds-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.odds-grid div {
+  display: grid;
+  gap: 5px;
+  min-height: 68px;
+  border: 1px solid #dad4c8;
+  border-radius: 6px;
+  padding: 9px;
+  background: #f7f4ee;
+}
+
+.odds-grid span {
+  overflow: hidden;
+  color: #4f4b45;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.odds-grid strong {
+  color: #cb2f41;
+  font-size: 1.15rem;
+}
+
 @media (max-width: 480px) {
   .page {
     justify-items: center;
   }
 
-  .auth-panel {
+  .app-panel {
     margin-right: 0;
     padding: 22px;
+  }
+
+  .odds-grid {
+    grid-template-columns: 1fr;
   }
 }

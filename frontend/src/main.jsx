@@ -1,6 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
+
+const API_BASE_URL = 'https://api-lions-bet.onrender.com';
 
 const initialForm = {
   nome: '',
@@ -29,15 +31,45 @@ function getStoredUsuario() {
 }
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('auth');
   const [mode, setMode] = useState('cadastro');
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [usuario, setUsuario] = useState(getStoredUsuario);
+  const [eventos, setEventos] = useState([]);
+  const [eventosStatus, setEventosStatus] = useState({ type: 'idle', message: '' });
 
   const endpoint = useMemo(() => {
-    return mode === 'cadastro' ? 'https://api-lions-bet.onrender.com/api/auth/cadastro' : 'https://api-lions-bet.onrender.com/api/auth/login';
+    return mode === 'cadastro' ? `${API_BASE_URL}/api/auth/cadastro` : `${API_BASE_URL}/api/auth/login`;
   }, [mode]);
+
+  useEffect(() => {
+    if (currentPage !== 'eventos') {
+      return;
+    }
+
+    async function loadEventos() {
+      setEventosStatus({ type: 'loading', message: '' });
+
+      try {
+        const apiResponse = await fetch(`${API_BASE_URL}/api/eventos`);
+        const data = await apiResponse.json();
+
+        if (!apiResponse.ok) {
+          throw new Error(data?.message || data?.erro || 'Não foi possível carregar os eventos.');
+        }
+
+        setEventos(Array.isArray(data?.eventos) ? data.eventos : []);
+        setEventosStatus({ type: 'success', message: '' });
+      } catch (error) {
+        setEventos([]);
+        setEventosStatus({ type: 'error', message: error.message });
+      }
+    }
+
+    loadEventos();
+  }, [currentPage]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -120,7 +152,26 @@ function App() {
 
   return (
     <main className="page">
-      <section className="auth-panel" aria-labelledby="auth-title">
+      <section className={currentPage === 'eventos' ? 'app-panel events-panel' : 'app-panel'} aria-labelledby={currentPage === 'eventos' ? 'events-title' : 'auth-title'}>
+        <nav className="app-nav" aria-label="Navegação principal">
+          <button
+            type="button"
+            className={currentPage === 'auth' ? 'active' : ''}
+            onClick={() => setCurrentPage('auth')}
+          >
+            Conta
+          </button>
+          <button
+            type="button"
+            className={currentPage === 'eventos' ? 'active' : ''}
+            onClick={() => setCurrentPage('eventos')}
+          >
+            Eventos
+          </button>
+        </nav>
+
+        {currentPage === 'auth' ? (
+          <>
         <div className="brand-block">
           <p className="eyebrow">Lions Bet</p>
           <h1 id="auth-title">{mode === 'cadastro' ? 'Criar conta' : 'Entrar na conta'}</h1>
@@ -208,6 +259,57 @@ function App() {
           <button className="logout-button" type="button" onClick={handleLogout}>
             Sair
           </button>
+        )}
+          </>
+        ) : (
+          <section className="events-page" aria-labelledby="events-title">
+            <div className="brand-block">
+              <p className="eyebrow">Eventos abertos</p>
+              <h1 id="events-title">Escolha uma partida</h1>
+            </div>
+
+            {eventosStatus.type === 'loading' && <p className="events-state">Carregando eventos...</p>}
+
+            {eventosStatus.type === 'error' && (
+              <p className="status-message error" role="status">
+                {eventosStatus.message}
+              </p>
+            )}
+
+            {eventosStatus.type === 'success' && eventos.length === 0 && (
+              <p className="events-state">Nenhum evento aberto no momento.</p>
+            )}
+
+            {eventos.length > 0 && (
+              <div className="events-list">
+                {eventos.map((evento) => (
+                  <article className="event-card" key={evento._id}>
+                    <div>
+                      <p className="event-status">{evento.status}</p>
+                      <h2>
+                        {evento.mandante} x {evento.visitante}
+                      </h2>
+                    </div>
+
+                    <div className="odds-grid" aria-label="Odds do evento">
+                      <div>
+                        <span>{evento.mandante}</span>
+                        <strong>{Number(evento.oddMandante).toFixed(2)}</strong>
+                      </div>
+                      <div>
+                        <span>Empate</span>
+                        <strong>{Number(evento.oddEmpate).toFixed(2)}</strong>
+                      </div>
+                      <div>
+                        <span>{evento.visitante}</span>
+                        <strong>{Number(evento.oddVisitante).toFixed(2)}</strong>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </section>
         )}
       </section>
     </main>
