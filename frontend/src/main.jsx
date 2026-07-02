@@ -8,11 +8,32 @@ const initialForm = {
   senha: '',
 };
 
+const authStorageKeys = {
+  token: 'lionsbet_token',
+  usuario: 'lionsbet_usuario',
+};
+
+function getStoredUsuario() {
+  const storedUsuario = localStorage.getItem(authStorageKeys.usuario);
+
+  if (!storedUsuario) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUsuario);
+  } catch {
+    localStorage.removeItem(authStorageKeys.usuario);
+    return null;
+  }
+}
+
 function App() {
   const [mode, setMode] = useState('cadastro');
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [usuario, setUsuario] = useState(getStoredUsuario);
 
   const endpoint = useMemo(() => {
     return mode === 'cadastro' ? 'https://api-lions-bet.onrender.com/api/auth/cadastro' : 'https://api-lions-bet.onrender.com/api/auth/login';
@@ -59,9 +80,21 @@ function App() {
         throw new Error(data?.message || data?.erro || 'Não foi possível concluir a solicitação.');
       }
 
+      if (!data?.token || !data?.usuario) {
+        throw new Error('Resposta de autenticação inválida.');
+      }
+
+      localStorage.setItem(authStorageKeys.token, data.token);
+      localStorage.setItem(authStorageKeys.usuario, JSON.stringify(data.usuario));
+      setUsuario(data.usuario);
+      setForm(initialForm);
+
       setStatus({
         type: 'success',
-        message: mode === 'cadastro' ? 'Cadastro realizado com sucesso.' : 'Login realizado com sucesso.',
+        message:
+          mode === 'cadastro'
+            ? 'Cadastro realizado com sucesso. Sessão salva.'
+            : 'Login realizado com sucesso. Sessão salva.',
       });
     } catch (error) {
       setStatus({
@@ -78,12 +111,20 @@ function App() {
     setStatus({ type: '', message: '' });
   }
 
+  function handleLogout() {
+    localStorage.removeItem(authStorageKeys.token);
+    localStorage.removeItem(authStorageKeys.usuario);
+    setUsuario(null);
+    setStatus({ type: '', message: '' });
+  }
+
   return (
     <main className="page">
       <section className="auth-panel" aria-labelledby="auth-title">
         <div className="brand-block">
           <p className="eyebrow">Lions Bet</p>
           <h1 id="auth-title">{mode === 'cadastro' ? 'Criar conta' : 'Entrar na conta'}</h1>
+          {usuario && <p className="session-info">Sessão ativa: {usuario.nome}</p>}
         </div>
 
         <div className="mode-switch" role="tablist" aria-label="Escolha o fluxo de autenticação">
@@ -161,6 +202,12 @@ function App() {
           <p className={`status-message ${status.type}`} role="status">
             {status.message}
           </p>
+        )}
+
+        {usuario && (
+          <button className="logout-button" type="button" onClick={handleLogout}>
+            Sair
+          </button>
         )}
       </section>
     </main>

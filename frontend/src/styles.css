@@ -62,6 +62,12 @@ h1 {
   line-height: 1.04;
 }
 
+.session-info {
+  margin: 12px 0 0;
+  color: #4f4b45;
+  font-weight: 700;
+}
+
 .mode-switch {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -129,6 +135,18 @@ h1 {
 .submit-button:disabled {
   cursor: wait;
   opacity: 0.72;
+}
+
+.logout-button {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 16px;
+  border: 1px solid #cfc8bb;
+  border-radius: 6px;
+  color: #292723;
+  background: #ffffff;
+  cursor: pointer;
+  font-weight: 800;
 }
 
 .status-message {
