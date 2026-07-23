@@ -3,3 +3,4 @@ node_modules/
 npm-debug.log*
 .vscode/
 .claude/
+.codex_sessions.txt

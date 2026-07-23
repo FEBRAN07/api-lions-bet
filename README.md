@@ -2,6 +2,11 @@
 
 Lions Bet is a full-stack betting demo application with a Node.js/Express API, MongoDB persistence, JWT authentication, and a React/Vite frontend. The backend follows a simple MVC-style structure with routes, controllers, services, repositories, models, and middlewares.
 
+## Deploy
+
+Backend: https://api-lions-bet.onrender.com/
+Frontend: https://api-lions-bet-frontend.onrender.com/
+
 ## Stack
 
 ### Backend
@@ -110,7 +115,7 @@ npm run dev
 By default, Vite runs the frontend on `http://localhost:5173`. The current frontend source points to the deployed API URL:
 
 ```js
-const API_BASE_URL = 'https://api-lions-bet.onrender.com';
+const API_BASE_URL = "https://api-lions-bet.onrender.com";
 ```
 
 Change this constant in `frontend/src/main.jsx` if you want the frontend to call a local backend, for example `http://localhost:3000`.
@@ -143,7 +148,7 @@ Response:
 
 ```json
 {
-  "message": "Boilerplate API MVC está rodando."
+    "message": "Boilerplate API MVC está rodando."
 }
 ```
 
@@ -157,9 +162,9 @@ Body:
 
 ```json
 {
-  "nome": "Maria Silva",
-  "email": "maria@example.com",
-  "senha": "123456"
+    "nome": "Maria Silva",
+    "email": "maria@example.com",
+    "senha": "123456"
 }
 ```
 
@@ -177,8 +182,8 @@ Body:
 
 ```json
 {
-  "email": "maria@example.com",
-  "senha": "123456"
+    "email": "maria@example.com",
+    "senha": "123456"
 }
 ```
 
@@ -198,8 +203,8 @@ Body:
 
 ```json
 {
-  "nome": "Maria Souza",
-  "senha": "novaSenha123"
+    "nome": "Maria Souza",
+    "senha": "novaSenha123"
 }
 ```
 
@@ -217,9 +222,9 @@ Response shape:
 
 ```json
 {
-  "carteira": {
-    "saldo": 100
-  }
+    "carteira": {
+        "saldo": 100
+    }
 }
 ```
 
@@ -231,7 +236,7 @@ Body:
 
 ```json
 {
-  "valor": 50
+    "valor": 50
 }
 ```
 
@@ -259,11 +264,11 @@ Body:
 
 ```json
 {
-  "mandante": "Lions FC",
-  "visitante": "Tigers FC",
-  "oddMandante": 1.8,
-  "oddEmpate": 3.2,
-  "oddVisitante": 2.4
+    "mandante": "Lions FC",
+    "visitante": "Tigers FC",
+    "oddMandante": 1.8,
+    "oddEmpate": 3.2,
+    "oddVisitante": 2.4
 }
 ```
 
@@ -277,9 +282,9 @@ Body:
 
 ```json
 {
-  "oddMandante": 1.9,
-  "oddEmpate": 3.1,
-  "oddVisitante": 2.2
+    "oddMandante": 1.9,
+    "oddEmpate": 3.1,
+    "oddVisitante": 2.2
 }
 ```
 
@@ -291,7 +296,7 @@ Body:
 
 ```json
 {
-  "resultado": "mandante"
+    "resultado": "mandante"
 }
 ```
 
@@ -305,10 +310,10 @@ Response includes settlement totals:
 
 ```json
 {
-  "totalApostas": 100,
-  "ganhadoras": 2,
-  "perdedoras": 3,
-  "totalPago": 180
+    "totalApostas": 100,
+    "ganhadoras": 2,
+    "perdedoras": 3,
+    "totalPago": 180
 }
 ```
 
@@ -324,9 +329,9 @@ Body:
 
 ```json
 {
-  "evento": "64f000000000000000000000",
-  "palpite": "mandante",
-  "valor": 25
+    "evento": "64f000000000000000000000",
+    "palpite": "mandante",
+    "valor": 25
 }
 ```
 
@@ -362,10 +367,10 @@ Admin only. Lists all bets.
 
 ```json
 {
-  "nome": "Maria Silva",
-  "tipo": "usuario",
-  "email": "maria@example.com",
-  "saldo": 0
+    "nome": "Maria Silva",
+    "tipo": "usuario",
+    "email": "maria@example.com",
+    "saldo": 0
 }
 ```
 
@@ -375,13 +380,13 @@ Admin only. Lists all bets.
 
 ```json
 {
-  "mandante": "Lions FC",
-  "visitante": "Tigers FC",
-  "oddMandante": 1.8,
-  "oddEmpate": 3.2,
-  "oddVisitante": 2.4,
-  "status": "aberto",
-  "resultado": "mandante"
+    "mandante": "Lions FC",
+    "visitante": "Tigers FC",
+    "oddMandante": 1.8,
+    "oddEmpate": 3.2,
+    "oddVisitante": 2.4,
+    "status": "aberto",
+    "resultado": "mandante"
 }
 ```
 
@@ -391,13 +396,13 @@ Admin only. Lists all bets.
 
 ```json
 {
-  "usuario": "64f000000000000000000001",
-  "evento": "64f000000000000000000000",
-  "palpite": "mandante",
-  "valor": 25,
-  "oddNaAposta": 1.8,
-  "retornoPotencial": 45,
-  "status": "pendente"
+    "usuario": "64f000000000000000000001",
+    "evento": "64f000000000000000000000",
+    "palpite": "mandante",
+    "valor": 25,
+    "oddNaAposta": 1.8,
+    "retornoPotencial": 45,
+    "status": "pendente"
 }
 ```
 
